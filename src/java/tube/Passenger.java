@@ -183,7 +183,7 @@ public class Passenger implements Serializable {
 
     @Override
     public String toString() {
-        return "tube.Passenger[ pNo=" + pNo + " ]";
+        return pFirstName + pLastName;
     }
     
 }

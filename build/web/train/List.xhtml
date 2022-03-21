@@ -17,6 +17,7 @@
             <h:form>
                 <p:panel header="Search train" style="margin: 0 auto; padding: 5rem">
                     <f:facet name="footer">
+      
                         <p:outputLabel style="padding: 15px;" value="Date: " for="acSimple" />
                         <p:calendar id="startTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{trainController.selected.startTime}" title="#{bundle.EditTrainTitle_startTime}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_startTime}" showOn="button"/>
 
