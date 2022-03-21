@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+z
+        <p:dialog id="PassengerCreateDlg" widgetVar="PassengerCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePassengerTitle}">
+            <h:form id="PassengerCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{passengerController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePassengerLabel_PFirstName}" for="PFirstName" />
+                        <p:inputText id="PFirstName" value="#{passengerController.selected.PFirstName}" title="#{bundle.CreatePassengerTitle_PFirstName}" required="true" requiredMessage="#{bundle.CreatePassengerRequiredMessage_PFirstName}"/>
+                        <p:outputLabel value="#{bundle.CreatePassengerLabel_PLastName}" for="PLastName" />
+                        <p:inputText id="PLastName" value="#{passengerController.selected.PLastName}" title="#{bundle.CreatePassengerTitle_PLastName}" required="true" requiredMessage="#{bundle.CreatePassengerRequiredMessage_PLastName}"/>
+                        <p:outputLabel value="#{bundle.CreatePassengerLabel_PDob}" for="PDob" />
+                        <p:calendar id="PDob" pattern="MM/dd/yyyy" value="#{passengerController.selected.PDob}" title="#{bundle.EditPassengerTitle_PDob}" required="true" requiredMessage="#{bundle.EditPassengerRequiredMessage_PDob}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePassengerLabel_PPhone}" for="PPhone" />
+                        <p:inputText id="PPhone" value="#{passengerController.selected.PPhone}" title="#{bundle.CreatePassengerTitle_PPhone}" required="true" requiredMessage="#{bundle.CreatePassengerRequiredMessage_PPhone}"/>
+                        <p:outputLabel value="#{bundle.CreatePassengerLabel_PGender}" for="PGender" />
+                        <p:inputText id="PGender" value="#{passengerController.selected.PGender}" title="#{bundle.CreatePassengerTitle_PGender}" required="true" requiredMessage="#{bundle.CreatePassengerRequiredMessage_PGender}"/>
+                        <p:outputLabel value="#{bundle.CreatePassengerLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{passengerController.selected.userId}" required="true" requiredMessage="#{bundle.EditPassengerRequiredMessage_userId}">
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{passengerController.create}" value="#{bundle.Save}" update="display,:PassengerListForm:datalist,:growl" oncomplete="handleSubmit(args,'PassengerCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PassengerCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

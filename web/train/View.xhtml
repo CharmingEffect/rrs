@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TrainViewDlg" widgetVar="TrainViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTrainTitle}">
+            <h:form id="TrainViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{trainController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTrainLabel_trainNo}"/>
+                        <h:outputText value="#{trainController.selected.trainNo}" title="#{bundle.ViewTrainTitle_trainNo}"/>
+                        <h:outputText value="#{bundle.ViewTrainLabel_trainName}"/>
+                        <h:outputText value="#{trainController.selected.trainName}" title="#{bundle.ViewTrainTitle_trainName}"/>
+                        <h:outputText value="#{bundle.ViewTrainLabel_distance}"/>
+                        <h:outputText value="#{trainController.selected.distance}" title="#{bundle.ViewTrainTitle_distance}"/>
+                        <h:outputText value="#{bundle.ViewTrainLabel_startTime}"/>
+                        <h:outputText value="#{trainController.selected.startTime}" title="#{bundle.ViewTrainTitle_startTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewTrainLabel_endTime}"/>
+                        <h:outputText value="#{trainController.selected.endTime}" title="#{bundle.ViewTrainTitle_endTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewTrainLabel_leaveFromStn}"/>
+                        <h:outputText value="#{trainController.selected.leaveFromStn}" title="#{bundle.ViewTrainTitle_leaveFromStn}"/>
+                        <h:outputText value="#{bundle.ViewTrainLabel_arriveAtStn}"/>
+                        <h:outputText value="#{trainController.selected.arriveAtStn}" title="#{bundle.ViewTrainTitle_arriveAtStn}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TrainViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

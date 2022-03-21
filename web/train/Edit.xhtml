@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TrainEditDlg" widgetVar="TrainEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTrainTitle}">
+            <h:form id="TrainEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{trainController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditTrainLabel_trainNo}" for="trainNo" />
+                        <p:inputText id="trainNo" value="#{trainController.selected.trainNo}" title="#{bundle.EditTrainTitle_trainNo}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_trainNo}"/>
+                        <p:outputLabel value="#{bundle.EditTrainLabel_trainName}" for="trainName" />
+                        <p:inputText id="trainName" value="#{trainController.selected.trainName}" title="#{bundle.EditTrainTitle_trainName}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_trainName}"/>
+                        <p:outputLabel value="#{bundle.EditTrainLabel_distance}" for="distance" />
+                        <p:inputText id="distance" value="#{trainController.selected.distance}" title="#{bundle.EditTrainTitle_distance}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_distance}"/>
+                        <p:outputLabel value="#{bundle.EditTrainLabel_startTime}" for="startTime" />
+                        <p:calendar id="startTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{trainController.selected.startTime}" title="#{bundle.EditTrainTitle_startTime}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_startTime}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditTrainLabel_endTime}" for="endTime" />
+                        <p:calendar id="endTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{trainController.selected.endTime}" title="#{bundle.EditTrainTitle_endTime}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_endTime}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditTrainLabel_leaveFromStn}" for="leaveFromStn" />
+                        <p:inputText id="leaveFromStn" value="#{trainController.selected.leaveFromStn}" title="#{bundle.EditTrainTitle_leaveFromStn}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_leaveFromStn}"/>
+                        <p:outputLabel value="#{bundle.EditTrainLabel_arriveAtStn}" for="arriveAtStn" />
+                        <p:inputText id="arriveAtStn" value="#{trainController.selected.arriveAtStn}" title="#{bundle.EditTrainTitle_arriveAtStn}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_arriveAtStn}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{trainController.update}" value="#{bundle.Save}" update="display,:TrainListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TrainEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TrainEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
