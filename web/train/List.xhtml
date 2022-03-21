@@ -27,13 +27,6 @@
                         <p:outputLabel style="padding: 15px;" value="Going to:" for="acMinLength" />
                         <p:autoComplete id="acMinLength" value="#{train.arriveAtStn}" completeMethod="#{trainController.completeArriveAt}" effect="fade" />
 
-                        <p:outputLabel style="padding: 15px;" value="Delay(1000):" for="acDelay" />
-                        <p:autoComplete id="acDelay" queryDelay="1000" value="#{autoCompleteView.txt3}" completeMethod="#{autoCompleteView.completeText}" effect="blind" />
-
-                        <p:outputLabel style="padding: 15px;" value="Max Results(5):" for="acMaxResults" />
-                        <p:autoComplete id="acMaxResults" maxResults="5" value="#{autoCompleteView.txt4}" completeMethod="#{autoCompleteView.completeText}" />
-
-
                     </f:facet>
                 </p:panel> 
             </h:form>
