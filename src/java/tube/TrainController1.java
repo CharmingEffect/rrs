@@ -4,10 +4,12 @@ import tube.util.JsfUtil;
 import tube.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -16,25 +18,24 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.primefaces.PrimeFaces;
 
-@Named("userController")
+@Named("trainController")
 @SessionScoped
-public class UserController implements Serializable {
+public class TrainController implements Serializable {
 
     @EJB
-    private tube.UserFacade ejbFacade;
-    private List<User> items = null;
-    private User selected;
+    private tube.TrainFacade ejbFacade;
+    private List<Train> items = null;
+    private Train selected;
 
-    public UserController() {
+    public TrainController() {
     }
 
-    public User getSelected() {
+    public Train getSelected() {
         return selected;
     }
 
-    public void setSelected(User selected) {
+    public void setSelected(Train selected) {
         this.selected = selected;
     }
 
@@ -44,38 +45,36 @@ public class UserController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private UserFacade getFacade() {
+    private TrainFacade getFacade() {
         return ejbFacade;
     }
 
-    public User prepareCreate() {
-        selected = new User();
+    public Train prepareCreate() {
+        selected = new Train();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        
-        PrimeFaces.current().resetInputs("UserCreateForm");
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TrainCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UserUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TrainUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UserDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TrainDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<User> getItems() {
+    public List<Train> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,30 +108,60 @@ public class UserController implements Serializable {
             }
         }
     }
+    
+ 
+      
+      
+       public List<String> completeLeaveFrom(String query) {
+        String queryLowerCase = query.toLowerCase();
+        List<String> stations = new ArrayList<>();
+        
+        for (Train train : items) {
+            stations.add(train.getLeaveFromStn());
+        }
 
-    public User getUser(java.lang.Integer id) {
+        return stations.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+    } 
+       
+       
+        
+       public List<String> completeArriveAt(String query) {
+        String queryLowerCase = query.toLowerCase();
+        List<String> stations = new ArrayList<>();
+        
+        for (Train train : items) {
+            stations.add(train.getArriveAtStn());
+        }
+
+        return stations.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+    }
+       
+       
+       
+
+    public Train getTrain(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<User> getItemsAvailableSelectMany() {
+    public List<Train> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<User> getItemsAvailableSelectOne() {
+    public List<Train> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = User.class)
-    public static class UserControllerConverter implements Converter {
+    @FacesConverter(forClass = Train.class)
+    public static class TrainControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            UserController controller = (UserController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "userController");
-            return controller.getUser(getKey(value));
+            TrainController controller = (TrainController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "trainController");
+            return controller.getTrain(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -152,11 +181,11 @@ public class UserController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof User) {
-                User o = (User) object;
-                return getStringKey(o.getUserId());
+            if (object instanceof Train) {
+                Train o = (Train) object;
+                return getStringKey(o.getTrainNo());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), User.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Train.class.getName()});
                 return null;
             }
         }
