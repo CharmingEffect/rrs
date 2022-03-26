@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <style>
+
+            .ui-layout-unit-content{
+
+                background: url("/rrs/faces/javax.faces.resource/images/train.jpg") !important;
+                background-repeat: no-repeat !important;
+                z-index: 1000;
+
+            }
+
+
+        </style>
+
+    </h:head>
+
+    <h:body styleClass="container bg-image-index">
+        <p:graphicImage styleClass="logo" name="logo.png" library="images"/>
+
+        <p:growl id="growl" life="1500" />
+
+
+
+        <p:layout fullPage="true">
+            <p:layoutUnit styleClass="logo-text" position="north" size="65" header="#{bundle.AppName}">
+                <h:form >
+                    <p:menubar>
+                        <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
+
+                        <p:menuitem value="Passenger" outcome="//passenger/List.xhtml" />
+                        <p:menuitem value="Ticket" outcome="//ticket/List.xhtml" />
+                        <p:menuitem value="Train" outcome="//train/List.xhtml" />
+                        <p:menuitem value="User" outcome="//user/List.xhtml" />
+                        <p:menuitem value="Basic" outcome="//basic.xhtml" />
+                   
+
+
+
+                        <p:menuitem >
+                            <p:themeSwitcher style="width:165px;" >
+                                <f:selectItem itemLabel="Choose Theme" />
+                                <f:selectItems value="#{themeSwitcherBean.themes}" />
+                                <p:ajax global="false" listener="#{themeSwitcherBean.saveTheme}" />
+                            </p:themeSwitcher>
+                        </p:menuitem>
+
+
+
+                        <f:facet name="options">
+
+           
+                                <h:commandButton styleClass="ui-button-text ui-c ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="#{bundle.Logout}" actionListener="#{user.logout}"/>
+                                    
+                               
+                            
+                                
+                                
+            
+                 
+                        </f:facet>
+
+
+                    </p:menubar>
+
+
+
+
+
+                </h:form>
+                
+                
+                 <h:form id="UserCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">   
+                        <p:outputLabel value="#{bundle.CreateUserLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{userController.newUser.username}" title="#{bundle.CreateUserTitle_username}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_username}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{userController.newUser.email}" title="#{bundle.CreateUserTitle_email}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_email}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{userController.newUser.firstName}" title="#{bundle.CreateUserTitle_firstName}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_firstName}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{userController.newUser.lastName}" title="#{bundle.CreateUserTitle_lastName}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_lastName}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_address}" for="address" />
+                        <p:inputText id="address" value="#{userController.newUser.address}" title="#{bundle.CreateUserTitle_address}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_address}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_city}" for="city" />
+                        <p:inputText id="city" value="#{userController.newUser.city}" title="#{bundle.CreateUserTitle_city}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_city}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_contact}" for="contact" />
+                        <p:inputText id="contact" value="#{userController.newUser.contact}" title="#{bundle.CreateUserTitle_contact}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_contact}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_dob}" for="dob" />
+                        <p:calendar id="dob" pattern="MM/dd/yyyy" value="#{userController.newUser.dob}" title="#{bundle.EditUserTitle_dob}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_dob}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_gender}" for="gender" />
+                        <p:inputText id="gender" value="#{userController.newUser.gender}" title="#{bundle.CreateUserTitle_gender}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_gender}"/>
+                        <p:outputLabel value="#{bundle.CreateUserLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{userController.newUser.password}" title="#{bundle.CreateUserTitle_password}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_password}"/>
+                    </p:panelGrid>
+                    <p:commandButton resetValues="true" actionListener="#{userController.prepareCreate}" value="#{bundle.Save}" update="growl" oncomplete="handleSubmit(args,'UserCreateDialog');"/>
+                </h:panelGroup>
+            </h:form>
+
+
+
+
+
+
+
+
+            </p:layoutUnit>
+
+
+
+
+            <p:layoutUnit position="center">
+                <ui:insert name="body"/>
+
+
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="60">
+              
+                <ui:insert name="footer"/>
+            </p:layoutUnit>
+
+        </p:layout>
+
+
+
+    </h:body>
+
+</html>

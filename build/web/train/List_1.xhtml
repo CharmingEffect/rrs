@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <!-- TRAIN -->
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListTrainTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <h:form id="TrainListForm">
+
+                <p:panel header="#{bundle.ListTrainTitle}">
+
+                   
+                        <f:facet  name="header">
+
+                            <p:outputLabel style="padding: 15px;" value="Date: " for="acSimple" />
+                            <p:calendar id="startTime" pattern="MM/dd/yyyy" title="#{bundle.EditTrainTitle_startTime}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_startTime}"/>
+
+                            <p:outputLabel style="padding: 15px;" value="Origin:" for="acSimple" />
+                            <p:autoComplete id="acSimple" var="originStn" value="#{train.leaveFromStn}" completeMethod="#{trainController.completeStations}"  />
+
+                            <p:outputLabel style="padding: 15px;" value="Destination:" for="acMinLength" />
+                            <p:autoComplete id="acMinLength" value="#{train.arriveAtStn}" completeMethod="#{trainController.completeStations}" effect="fade" />
+                            <p:commandButton  actionListener="#{trainController.byOriginStn}" value="Search"  />
+
+
+                        </f:facet>
+         
+
+                    <p:dataTable id="datalist" value="#{trainController.byOriginStn}" var="item"
+                                 selectionMode="single" 
+                                 paginator="true"
+                                 rowKey="#{item.trainNo}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTrainTitle_trainName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.trainName}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTrainTitle_leaveFromStn}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.leaveFromStn}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTrainTitle_arriveAtStn}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.arriveAtStn}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTrainTitle_distance}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.distance}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTrainTitle_startTime}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.startTime}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTrainTitle_endTime}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.endTime}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{trainController.prepareCreate}" update=":TrainCreateForm" oncomplete="PF('TrainCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TrainViewForm" oncomplete="PF('TrainViewDialog').show()" disabled="#{empty trainController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TrainEditForm" oncomplete="PF('TrainEditDialog').show()" disabled="#{empty trainController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{trainController.destroy}" update=":growl,datalist" disabled="#{empty trainController.selected}"/>
+                            
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
