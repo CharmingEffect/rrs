@@ -1,4 +1,4 @@
-package tube;
+package tube.train;
 
 import tube.util.JsfUtil;
 import tube.util.JsfUtil.PersistAction;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 public class TrainController implements Serializable {
 
     @EJB
-    private tube.TrainFacade ejbFacade;
+    private tube.train.TrainFacade ejbFacade;
     private List<Train> items = null;
     private Train selected;
 

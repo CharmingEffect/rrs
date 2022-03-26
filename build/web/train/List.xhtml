@@ -14,30 +14,15 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form>
-                <p:panel header="Search train" style="margin: 0 auto; padding: 5rem">
-                    <f:facet name="footer">
-      
-                        <p:outputLabel style="padding: 15px;" value="Date: " for="acSimple" />
-                        <p:calendar id="startTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{trainController.selected.startTime}" title="#{bundle.EditTrainTitle_startTime}" required="true" requiredMessage="#{bundle.EditTrainRequiredMessage_startTime}" showOn="button"/>
-
-                        <p:outputLabel style="padding: 15px;" value="Departing from:" for="acSimple" />
-                        <p:autoComplete id="acSimple" value="#{train.leaveFromStn}" completeMethod="#{trainController.completeLeaveFrom}" />
-
-                        <p:outputLabel style="padding: 15px;" value="Going to:" for="acMinLength" />
-                        <p:autoComplete id="acMinLength" value="#{train.arriveAtStn}" completeMethod="#{trainController.completeArriveAt}" effect="fade" />
-
-                    </f:facet>
-                </p:panel> 
-            </h:form>
+          
             <h:form id="TrainListForm">
 
-                <p:panel header="#{bundle.ListTrainTitle}">
+                <p:panel header="Search Train">
+         
 
-
-                    <p:dataTable id="datalist" value="#{trainController.items}" var="item"
+                    <p:dataTable  id="datalist" value="#{trainController.items}" var="item"
                                  selectionMode="single" selection="#{trainController.selected}"
-                                 paginator="true"
+                                 
                                  rowKey="#{item.trainNo}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
@@ -47,31 +32,21 @@
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTrainTitle_trainName}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.trainName}"/>
-                        </p:column>
-                          <p:column>
+                   
+                          <p:column  filterBy="#{item.leaveFromStn}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTrainTitle_leaveFromStn}"/>
                             </f:facet>
                             <h:outputText value="#{item.leaveFromStn}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.arriveAtStn}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTrainTitle_arriveAtStn}"/>
                             </f:facet>
                             <h:outputText value="#{item.arriveAtStn}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTrainTitle_distance}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.distance}"/>
-                        </p:column>
-                        <p:column>
+                      
+                        <p:column  filterBy="#{item.startTime}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTrainTitle_startTime}"/>
                             </f:facet>
@@ -79,7 +54,7 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.endTime}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTrainTitle_endTime}"/>
                             </f:facet>
