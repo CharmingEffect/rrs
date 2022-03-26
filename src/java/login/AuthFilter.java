@@ -7,6 +7,7 @@ package login;
 
 
 import java.io.IOException;
+import javax.faces.context.FacesContext;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.primefaces.PrimeFaces;
 
 
 
@@ -41,13 +43,21 @@ public class AuthFilter implements Filter {
 			HttpSession ses = reqt.getSession(false);
 
 			String reqURI = reqt.getRequestURI();
-			if (reqURI.contains("/index.xhtml") || reqURI.contains("user/Create.xhtml")
+			if (reqURI.contains("/index.xhtml") || reqURI.contains("/faces/user/Create.xhtml")
+                              
+                                || reqURI.contains("train/List.xhtml")|| reqURI.contains("user/List.xhtml")
 					|| (ses != null && ses.getAttribute("username") != null)
 					|| reqURI.contains("/public/")
-					|| reqURI.contains("javax.faces.resource"))
+					|| reqURI.contains("javax.faces.resource")
+                                || reqURI.contains("javax.faces.context"))
 				chain.doFilter(request, response);
-			else
+                        
+                        
+                        
+                        else 
 				resp.sendRedirect(reqt.getContextPath() + "/faces/index.xhtml");
+                        
+                   
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

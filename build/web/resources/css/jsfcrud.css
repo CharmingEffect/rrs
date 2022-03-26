@@ -22,8 +22,6 @@
   font-size: 1rem;
 }
 
-
-
  .ui-selectonemenu-panel, .ui-selectonemenu-list-item ,.ui-selectonemenu ,.ui-selectonemenu-label {
 
   font-size: 1rem;
@@ -65,5 +63,17 @@ text-indent: 4rem;
   font-size: 1em !important;
 }
 
+.ui-panel .ui-panel-titlebar {
+    margin-top: 4em;
+}
+
+.bg-image{
+
+    background: url("/rrs/faces/javax.faces.resource/images/train.jpg") !important;
+    background-repeat: no-repeat !important;
+    z-index: 1000;
+    background-size: 100% !important;
+
+}
 
 
