@@ -29,5 +29,5 @@ The guest can only see the home page and search train.
 
 [Arkadiusz Grudzien](https://arkadius.one) - arkadiuszgrudzien@yahoo.com
 
-Project Link: [https://github.com/CharmingEffect/crew-logistic-system](https://github.com/CharmingEffect/rrs)
+Project Link: [https://github.com/CharmingEffect/rrs](https://github.com/CharmingEffect/rrs)
 Demo:  [https://rrs.arkadius.one/](https://rrs.arkadius.one/)
