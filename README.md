@@ -24,3 +24,10 @@ The purpose of the application is to find a train for specific connections and b
 *	Add Passenger – the user can add a passenger to their list. There are also options for viewing the details edit and deleting the passenger.
 *	Logout –user can invalidate the session which means can log out. 
 The guest can only see the home page and search train.
+
+## Contact
+
+[Arkadiusz Grudzien](https://arkadius.one) - arkadiuszgrudzien@yahoo.com
+
+Project Link: [https://github.com/CharmingEffect/crew-logistic-system](https://github.com/CharmingEffect/rrs)
+Demo:  [https://rrs.arkadius.one/](https://rrs.arkadius.one/)
